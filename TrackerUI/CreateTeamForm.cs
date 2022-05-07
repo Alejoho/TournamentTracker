@@ -1,26 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using TrackerLibrary;
 using TrackerLibrary.Models;
 
 namespace TrackerUI
-{    
+{
     public partial class CreateTeamForm : Form
     {
         private List<PersonModel> availableTeamMembers = GlobalConfig.Connection.GetPerson_All();
         private List<PersonModel> selectedTeamMembers = new List<PersonModel>();
-        
-        public CreateTeamForm()
+        private ITeamRequester callingForm;
+
+        public CreateTeamForm(ITeamRequester caller)
         {
             InitializeComponent();
 
+            callingForm = caller;
             //CreateSampleData();
 
             WireUpLists();
@@ -38,7 +34,7 @@ namespace TrackerUI
         private void WireUpLists()
         {
             selectTeamMemberDropDown.DataSource = null;
-            selectTeamMemberDropDown.DataSource = availableTeamMembers;            
+            selectTeamMemberDropDown.DataSource = availableTeamMembers;
             selectTeamMemberDropDown.DisplayMember = "FullName";
             //selectTeamMemberDropDown.SelectedItem = null;
 
@@ -49,13 +45,13 @@ namespace TrackerUI
 
         private void createMemberButton_Click(object sender, EventArgs e)
         {
-            if(ValidateForm())
+            if (ValidateForm())
             {
                 PersonModel p = new PersonModel();
-                p.FirstName = firstNameValue.Text; 
-                p.LastName=lastNameValue.Text;
-                p.EmailAddress=emailValue.Text;
-                p.CellphoneNumber=cellPhoneValue.Text;
+                p.FirstName = firstNameValue.Text;
+                p.LastName = lastNameValue.Text;
+                p.EmailAddress = emailValue.Text;
+                p.CellphoneNumber = cellPhoneValue.Text;
 
                 GlobalConfig.Connection.CreatePerson(p);
 
@@ -68,7 +64,7 @@ namespace TrackerUI
             else
             {
                 MessageBox.Show("This form has invalid information. Please check it and try again");
-            }            
+            }
         }
 
         private bool ValidateForm()
@@ -78,13 +74,13 @@ namespace TrackerUI
             if (firstNameValue.Text.Length == 0)
                 output = false;
 
-            if(lastNameValue.Text.Length == 0)
+            if (lastNameValue.Text.Length == 0)
                 output = false;
 
-            if(emailValue.Text.Length == 0)
+            if (emailValue.Text.Length == 0)
                 output = false;
 
-            if(cellPhoneValue.Text.Length == 0)
+            if (cellPhoneValue.Text.Length == 0)
                 output = false;
 
             return output;
@@ -120,19 +116,21 @@ namespace TrackerUI
                 selectedTeamMembers.Remove(p);
                 availableTeamMembers.Add(p);
 
-                WireUpLists(); 
+                WireUpLists();
             }
         }
 
         private void createTeamButton_Click(object sender, EventArgs e)
         {
-            TeamModel t=new TeamModel();
+            TeamModel t = new TeamModel();
             t.TeamName = teamNameValue.Text;
             t.TeamMembers = selectedTeamMembers;
 
-            t = GlobalConfig.Connection.CreateTeam(t);
+            GlobalConfig.Connection.CreateTeam(t);
 
-            // TODO - If we aren't closing this form after creation, reset the form
+            callingForm.TeamComplete(t);
+
+            this.Close();
         }
     }
 }

@@ -19,7 +19,7 @@ namespace TrackerUI
         public CreatePrizeForm(IPrizeRequester caller)
         {
             InitializeComponent();
-            this.callingForm = caller;
+            callingForm = caller;
         }
 
         private void createPrizeButton_Click(object sender, EventArgs e)
