@@ -108,6 +108,119 @@ CONSTRAINT [PK_Matchup_Entries] PRIMARY KEY CLUSTERED ([id])
 
 
 
+use Tournaments2;
+
+--Store procedure
+
+
+go
+CREATE PROCEDURE [spMatchupEntries_GetByMatchup]
+	@MatchupId int
+
+AS
+BEGIN
+
+	SET NOCOUNT ON;
+
+	select me.*
+	from MatchupEntries me
+	inner join Matchups m on me.MatchupId = m.id
+	where m.id = @MatchupId;
+
+END
 
 
 
+go
+CREATE PROCEDURE [spMatchups_GetByTournament]
+	@TournamentId int
+
+AS
+BEGIN
+
+	SET NOCOUNT ON;
+
+
+END
+
+
+
+
+go
+CREATE PROCEDURE [spPeople_GetAll]
+
+AS
+BEGIN
+
+	SET NOCOUNT ON;
+
+	select * 
+	from People;
+
+END
+
+
+
+
+go
+CREATE PROCEDURE [spPrizes_GetByTournament]
+	@TournamentId int
+
+AS
+BEGIN
+
+	SET NOCOUNT ON;
+
+	select p.*
+	from Prizes p
+	inner join TournamentPrizes t on p.id = t.PrizeId
+	where t.tournamentId = @TournamentId;
+
+END
+
+
+
+
+go
+CREATE PROCEDURE [spTeams_GetByTournament]
+	@TournamentId int
+
+AS
+BEGIN
+
+	SET NOCOUNT ON;
+
+
+END
+
+
+
+
+go
+CREATE PROCEDURE [spTeamMembers_GetByTeam]
+	@TeamId
+
+AS
+BEGIN
+
+	SET NOCOUNT ON;
+
+
+END
+
+
+
+
+
+go
+CREATE PROCEDURE [spTournaments_GetAll]
+
+AS
+BEGIN
+
+	SET NOCOUNT ON;
+
+	select *
+	from Tournaments;
+
+END
