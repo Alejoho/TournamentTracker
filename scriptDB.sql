@@ -1,15 +1,18 @@
 GO 
 USE [master];
+
+--GO
+--DROP DATABASE if exists [Tournaments2];
+
 GO
+CREATE DATABASE [Tournaments2];
 
-CREATE DATABASE "Tournaments2";
-
-go
-
-USE "Tournaments2";
+GO
+USE [Tournaments2];
 
 
 --Tables
+
 
 GO
 CREATE TABLE [Prizes](
@@ -18,9 +21,10 @@ CREATE TABLE [Prizes](
 [PlaceName] [nvarchar](50) NOT NULL,
 [PrizeAmount] [money] NOT NULL,
 [PrizePercentage] [float] NOT NULL,
-CONSTRAINT [PK_Prizes] PRIMARY KEY CLUSTERED ([id]),
-CONSTRAINT [DF_Prizes_PrizeAmount] DEFAULT ((0)) FOR [PrizeAmount],
-CONSTRAINT [DF_Prizes_PrizePercentage] DEFAULT ((0)) FOR [PrizePercentage]
+CONSTRAINT [PK_Prizes] PRIMARY KEY CLUSTERED ([id])
+--,
+--CONSTRAINT [DF_Prizes_PrizeAmount] DEFAULT ((0)) FOR [PrizeAmount],
+--CONSTRAINT [DF_Prizes_PrizePercentage] DEFAULT ((0)) FOR [PrizePercentage]
 );
 
 GO
@@ -44,12 +48,13 @@ CREATE TABLE [Tournaments](
 [id] [int] IDENTITY(1,1) NOT NULL,
 [TournamentName] [nvarchar](50) NOT NULL,
 [EntryFee] [money] NOT NULL,
-CONSTRAINT [PK_Tournaments] PRIMARY KEY CLUSTERED ([id]),
-CONSTRAINT [DF_Tournaments_EntryFee] DEFAULT ((0)) FOR [EntryFee]
+CONSTRAINT [PK_Tournaments] PRIMARY KEY CLUSTERED ([id])
+--,
+--CONSTRAINT [DF_Tournaments_EntryFee] DEFAULT ((0)) FOR [EntryFee]
 );
 
 GO
-ALTER TABLE [Tournaments] ADD CONSTRAINT [DF_[Tournaments]_EntryFee] DEFAULT ((0)) FOR [EntryFee];
+ALTER TABLE [Tournaments] ADD CONSTRAINT [DF_Tournaments_EntryFee] DEFAULT ((0)) FOR [EntryFee];
 
 
 GO
@@ -61,14 +66,12 @@ CONSTRAINT [PK_Tournament_Entries] PRIMARY KEY CLUSTERED ([id]),
 );
 
 
-
 GO
 CREATE TABLE [Teams](
 [id] [int] IDENTITY(1,1) NOT NULL,
 [TeamName] [nvarchar](50) NOT NULL,
 CONSTRAINT [PK_Teams] PRIMARY KEY CLUSTERED ([id]),
 );
-
 
 
 GO
@@ -78,7 +81,6 @@ CREATE TABLE [TeamMembers](
 [PersonId] [int] NOT NULL,
 CONSTRAINT [PK_Team_Members] PRIMARY KEY CLUSTERED ([id])
 );
-
 
 
 GO
@@ -92,7 +94,6 @@ CONSTRAINT [PK_People] PRIMARY KEY CLUSTERED ([id])
 );
 
 
-
 GO
 CREATE TABLE [Matchups](
 [id] [int] IDENTITY(1,1) NOT NULL,
@@ -100,7 +101,6 @@ CREATE TABLE [Matchups](
 [MatchupRound] [int] NOT NULL,
 CONSTRAINT [PK_Matchups] PRIMARY KEY CLUSTERED ([id])
 );
-
 
 
 GO
@@ -116,10 +116,47 @@ CONSTRAINT [PK_Matchup_Entries] PRIMARY KEY CLUSTERED ([id])
 
 --Relations
 
-ALTER TABLE [TournamentPrizes]
+
+GO
+ALTER TABLE [TournamentPrizes] ADD CONSTRAINT [FK_TournamentPrizes_TournamentId] FOREIGN KEY ([TournamentId]) 
+REFERENCES [Tournaments] (id); 
+
+GO
+ALTER TABLE [TournamentPrizes] ADD CONSTRAINT [FK_TournamentPrizes_PrizeId] FOREIGN KEY ([PrizeId])
+REFERENCES [Prizes] ([id]);
+
+GO
+ALTER TABLE [TournamentEntries] ADD CONSTRAINT [FK_TournamentEntries_TournamentId] FOREIGN KEY ([TournamentId])
+REFERENCES [Tournaments] ([id]);
+
+GO
+ALTER TABLE [TournamentEntries] ADD CONSTRAINT [FK_TournamentEntries_TeamId] FOREIGN KEY ([TeamId])
+REFERENCES [Teams] ([id]);
+
+GO
+ALTER TABLE [TeamMembers] ADD CONSTRAINT [FK_TeamMembers_TeamId] FOREIGN KEY ([TeamId])
+REFERENCES [Teams] ([id]);
+
+GO
+ALTER TABLE [TeamMembers] ADD CONSTRAINT [FK_TeamMembers_PersonId] FOREIGN KEY ([PersonId])
+REFERENCES [People] ([id]);
+
+GO
+ALTER TABLE [Matchups] ADD CONSTRAINT [FK_Matchups_WinnerId] FOREIGN KEY ([WinnerId])
+REFERENCES [Teams] ([id]);
+
+GO
+ALTER TABLE [MatchupEntries] ADD CONSTRAINT [FK_MatchupEntries_MatchupId] FOREIGN KEY ([MatchupId])
+REFERENCES [Matchups] ([id]);
 
 
+GO 
+ALTER TABLE [MatchupEntries] ADD CONSTRAINT [FK_MatchupEntries_ParentMatchupId] FOREIGN KEY ([ParentMatchupId])
+REFERENCES [Matchups] ([id]);
 
+GO
+ALTER TABLE [MatchupEntries] ADD CONSTRAINT [FK_MatchupEntries_TeamCompetingId] FOREIGN KEY ([TeamCompetingId])
+REFERENCES [Teams] ([id]);
 
 
 
