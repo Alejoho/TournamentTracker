@@ -8,8 +8,10 @@ go
 
 USE "Tournaments2";
 
-GO
 
+--Tables
+
+GO
 CREATE TABLE [Prizes](
 [id] [int] IDENTITY(1,1) NOT NULL,
 [PlaceNumber] [int] NOT NULL,
@@ -20,6 +22,12 @@ CONSTRAINT [PK_Prizes] PRIMARY KEY CLUSTERED ([id]),
 CONSTRAINT [DF_Prizes_PrizeAmount] DEFAULT ((0)) FOR [PrizeAmount],
 CONSTRAINT [DF_Prizes_PrizePercentage] DEFAULT ((0)) FOR [PrizePercentage]
 );
+
+GO
+ALTER TABLE [Prizes] ADD CONSTRAINT [DF_Prizes_PrizeAmount] DEFAULT ((0)) FOR [PrizeAmount];
+
+GO
+ALTER TABLE [Prizes] ADD CONSTRAINT [DF_Prizes_PrizePercentage] DEFAULT ((0)) FOR [PrizePercentage];
 
 
 GO
@@ -39,6 +47,9 @@ CREATE TABLE [Tournaments](
 CONSTRAINT [PK_Tournaments] PRIMARY KEY CLUSTERED ([id]),
 CONSTRAINT [DF_Tournaments_EntryFee] DEFAULT ((0)) FOR [EntryFee]
 );
+
+GO
+ALTER TABLE [Tournaments] ADD CONSTRAINT [DF_[Tournaments]_EntryFee] DEFAULT ((0)) FOR [EntryFee];
 
 
 GO
@@ -103,14 +114,19 @@ CONSTRAINT [PK_Matchup_Entries] PRIMARY KEY CLUSTERED ([id])
 );
 
 
+--Relations
+
+ALTER TABLE [TournamentPrizes]
 
 
 
 
 
-use Tournaments2;
 
---Store procedure
+
+
+
+--Store procedures
 
 
 go
