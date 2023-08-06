@@ -1,14 +1,14 @@
 GO 
 USE [master];
 
---GO
---DROP DATABASE if exists [Tournaments2];
+GO
+DROP DATABASE if exists [Tournaments];
 
 GO
-CREATE DATABASE [Tournaments2];
+CREATE DATABASE [Tournaments];
 
 GO
-USE [Tournaments2];
+USE [Tournaments];
 
 
 --Tables
@@ -193,6 +193,12 @@ BEGIN
 
 	SET NOCOUNT ON;
 
+	select m.* 
+	from Matchups as m 
+	inner join Teams as tm on m.WinnerId = tm.id
+	inner join TournamentEntries as te on tm.id = te.TeamId
+	inner join Tournaments as t on te.TournamentId = t.id
+	where t.id = @TournamentId;
 
 END
 
@@ -243,6 +249,11 @@ BEGIN
 
 	SET NOCOUNT ON;
 
+	select tm.* 
+	from Teams as tm	
+	inner join TournamentEntries as te on tm.id = te.TeamId
+	inner join Tournaments as t on te.TournamentId = t.id
+	where t.id = @TournamentId;
 
 END
 
@@ -251,12 +262,18 @@ END
 
 go
 CREATE PROCEDURE [spTeamMembers_GetByTeam]
-	@TeamId
+	@TeamId int
 
 AS
 BEGIN
 
 	SET NOCOUNT ON;
+
+		select p.*
+	from People as p
+	inner join TeamMembers as tm on p.id = tm.PersonId
+	inner join Teams as t on tm.TeamId = t.id
+	where t.id = @TeamId
 
 
 END
