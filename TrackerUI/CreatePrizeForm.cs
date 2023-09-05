@@ -22,6 +22,7 @@ namespace TrackerUI
 
         private void createPrizeButton_Click(object sender, EventArgs e)
         {
+            MessageBox.Show(GlobalConfig.CnnString("Tournaments"));
             if(ValidateForm())
             {
                 PrizeModel model = new PrizeModel(
