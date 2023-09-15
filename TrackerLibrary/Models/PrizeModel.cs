@@ -15,7 +15,6 @@ namespace TrackerLibrary.Models
         /// The unique identifier for the prize
         /// </summary>
         public int ID { get; set; }
-
         /// <summary>
         /// Place which one team came out.
         /// </summary>
