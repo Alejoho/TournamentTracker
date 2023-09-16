@@ -18,8 +18,16 @@ namespace TrackerLibrary.DataAccess
             List<PrizeModel> prizes = PrizesFile.FullFilePath().LoadFile().ConvertToPrizeModel();
 
             //Find the max ID
-            //int currentId = prizes.Max(x => x.ID) + 1;
-            int currentId = prizes.OrderByDescending(x => x.ID).First().ID + 1;
+            int currentId = 1;
+
+            if( prizes.Count > 0 ) 
+            {
+                currentId = prizes.OrderByDescending(x => x.ID).First().ID + 1;
+            }
+
+            //int currentId = prizes.OrderByDescending(x => x.ID).Select(x => x.ID).FirstOrDefault() + 1;
+
+
             model.ID = currentId;
 
             //Add the new record with the new ID (max + 1)

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TrackerLibrary.Models;
+using System.Data;
 
 // * Load the text file
 // * Convert the text to List<PrizeModel>
@@ -58,7 +59,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers
             {
                 lines.Add($"{ p.ID },{ p.PlaceNumber },{ p.PlaceName },{ p.PrizeAmount },{ p.PrizePercentage }");
             }
-
+            string path = fileName.FullFilePath();
             File.WriteAllLines(fileName.FullFilePath(), lines);
         }
     }
