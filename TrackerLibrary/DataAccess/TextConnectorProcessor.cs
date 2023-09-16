@@ -18,7 +18,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers
 {
     public static class TextConnectorProcessor
     {
-        public static string FullFilePath(string fileName)
+        public static string FullFilePath(this string fileName)
         {
             return $"{ConfigurationManager.AppSettings["filePath"]}\\{fileName}";
         }
@@ -48,6 +48,18 @@ namespace TrackerLibrary.DataAccess.TextHelpers
                 output.Add(p);
             }
             return output;
+        }
+
+        public static void SaveToPrizeFile(this List<PrizeModel> models,string fileName)
+        {
+            List<string> lines = new List<string>();
+
+            foreach(PrizeModel p in models)
+            {
+                lines.Add($"{ p.ID },{ p.PlaceNumber },{ p.PlaceName },{ p.PrizeAmount },{ p.PrizePercentage }");
+            }
+
+            File.WriteAllLines(fileName.FullFilePath(), lines);
         }
     }
 }
