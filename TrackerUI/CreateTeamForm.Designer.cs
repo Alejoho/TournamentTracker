@@ -40,7 +40,7 @@
             this.lastNameValue = new System.Windows.Forms.TextBox();
             this.cellphoneLabel = new System.Windows.Forms.Label();
             this.lastNameLabel = new System.Windows.Forms.Label();
-            this.emialValue = new System.Windows.Forms.TextBox();
+            this.emailValue = new System.Windows.Forms.TextBox();
             this.emailLabel = new System.Windows.Forms.Label();
             this.firstNameValue = new System.Windows.Forms.TextBox();
             this.firstNameLabel = new System.Windows.Forms.Label();
@@ -117,7 +117,7 @@
             this.groupBox1.Controls.Add(this.lastNameValue);
             this.groupBox1.Controls.Add(this.cellphoneLabel);
             this.groupBox1.Controls.Add(this.lastNameLabel);
-            this.groupBox1.Controls.Add(this.emialValue);
+            this.groupBox1.Controls.Add(this.emailValue);
             this.groupBox1.Controls.Add(this.emailLabel);
             this.groupBox1.Controls.Add(this.firstNameValue);
             this.groupBox1.Controls.Add(this.firstNameLabel);
@@ -150,6 +150,7 @@
             this.createMemberButton.TabIndex = 16;
             this.createMemberButton.Text = "Create Member";
             this.createMemberButton.UseVisualStyleBackColor = true;
+            this.createMemberButton.Click += new System.EventHandler(this.createMemberButton_Click);
             // 
             // lastNameValue
             // 
@@ -178,12 +179,12 @@
             this.lastNameLabel.TabIndex = 8;
             this.lastNameLabel.Text = "Last Name";
             // 
-            // emialValue
+            // emailValue
             // 
-            this.emialValue.Location = new System.Drawing.Point(156, 148);
-            this.emialValue.Name = "emialValue";
-            this.emialValue.Size = new System.Drawing.Size(208, 43);
-            this.emialValue.TabIndex = 7;
+            this.emailValue.Location = new System.Drawing.Point(156, 148);
+            this.emailValue.Name = "emailValue";
+            this.emailValue.Size = new System.Drawing.Size(208, 43);
+            this.emailValue.TabIndex = 7;
             // 
             // emailLabel
             // 
@@ -293,7 +294,7 @@
         private System.Windows.Forms.Label lastNameLabel;
         private System.Windows.Forms.TextBox cellPhoneValue;
         private System.Windows.Forms.Label cellphoneLabel;
-        private System.Windows.Forms.TextBox emialValue;
+        private System.Windows.Forms.TextBox emailValue;
         private System.Windows.Forms.Label emailLabel;
         private System.Windows.Forms.Button createMemberButton;
         private System.Windows.Forms.ListBox teamMembersListBox;
