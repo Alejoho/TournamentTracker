@@ -12,7 +12,7 @@ namespace TrackerLibrary.Models
     public class PrizeModel
     {
         /// <summary>
-        /// The unique identifier for the prize
+        /// The unique identifier for the prize.
         /// </summary>
         public int ID { get; set; }
         /// <summary>

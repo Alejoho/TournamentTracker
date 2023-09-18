@@ -19,10 +19,10 @@ namespace TrackerLibrary.DataAccess
     {
         //TODO - Make the CreatePrize method actually save to the database
         /// <summary>
-        /// Gives and ID to the new prize and save it to the database
+        /// Gives and ID to the new prize and save it to the database.
         /// </summary>
-        /// <param name="model">The prize model</param>
-        /// <returns>The prize model, including the unique identifier</returns>
+        /// <param name="model">The prize model.</param>
+        /// <returns>The prize model, including the unique identifier.</returns>
         public PrizeModel CreatePrize(PrizeModel model)
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString("Tournaments")))
@@ -43,10 +43,10 @@ namespace TrackerLibrary.DataAccess
         }
 
         /// <summary>
-        /// Gives and ID to the new person and save it to the database
+        /// Gives and ID to the new person and save it to the database.
         /// </summary>
-        /// <param name="model">The prize model</param>
-        /// <returns>The person model, including the unique identifier</returns>
+        /// <param name="model">The person model.</param>
+        /// <returns>The person model, including the unique identifier.</returns>
         public PersonModel CreatePerson(PersonModel model)
         {
             using(IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString("Tournaments")))

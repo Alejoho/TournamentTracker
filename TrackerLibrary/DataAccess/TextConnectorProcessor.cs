@@ -19,11 +19,21 @@ namespace TrackerLibrary.DataAccess.TextHelpers
 {
     public static class TextConnectorProcessor
     {
+        /// <summary>
+        /// Gets the full path of a text file.
+        /// </summary>
+        /// <param name="fileName">The name of the file with its extension.</param>
+        /// <returns>Returns the full path of the file.</returns>
         public static string FullFilePath(this string fileName)
         {
             return $"{ConfigurationManager.AppSettings["filePath"]}\\{fileName}";
         }
 
+        /// <summary>
+        /// Loads a text file and returns a <c>List<string></c> of its content.
+        /// </summary>
+        /// <param name="file">The full path of the text file.</param>
+        /// <returns>Returns a <c>List<string></c>.</returns>
         public static List<string> LoadFile(this string file)
         {
             if(!File.Exists(file))
@@ -33,6 +43,11 @@ namespace TrackerLibrary.DataAccess.TextHelpers
             return File.ReadAllLines(file).ToList();
         }
 
+        /// <summary>
+        /// Converts a <c>List<string></c> to a <c>List<PrizeModel></c>.
+        /// </summary>
+        /// <param name="lines">The <c>List<string></c> that contains the information.</param>
+        /// <returns>Returns a <c>List<PrizeModel></c>.</returns>
         public static List<PrizeModel> ConvertToPrizeModel(this List<string> lines)
         {
             List<PrizeModel> output = new List<PrizeModel>();
@@ -51,6 +66,11 @@ namespace TrackerLibrary.DataAccess.TextHelpers
             return output;
         }
 
+        /// <summary>
+        /// Saves a <c>List<PrizeModel></c> to a text file.
+        /// </summary>
+        /// <param name="models">The <c>List<PrizeModel></c>.</param>
+        /// <param name="fileName">The file name with its extension.</param>
         public static void SaveToPrizeFile(this List<PrizeModel> models,string fileName)
         {
             List<string> lines = new List<string>();
