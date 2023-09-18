@@ -21,8 +21,8 @@ namespace TrackerLibrary.DataAccess
         /// <summary>
         /// Gives and ID to the new prize and save it to the database
         /// </summary>
-        /// <param name="model">The prize information</param>
-        /// <returns>The prize information, including the unique identifier</returns>
+        /// <param name="model">The prize model</param>
+        /// <returns>The prize model, including the unique identifier</returns>
         public PrizeModel CreatePrize(PrizeModel model)
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString("Tournaments")))
@@ -41,5 +41,30 @@ namespace TrackerLibrary.DataAccess
                 return model;
             }
         }
+
+        /// <summary>
+        /// Gives and ID to the new person and save it to the database
+        /// </summary>
+        /// <param name="model">The prize model</param>
+        /// <returns>The person model, including the unique identifier</returns>
+        public PersonModel CreatePerson(PersonModel model)
+        {
+            using(IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString("Tournaments")))
+            {
+                var p = new DynamicParameters();
+                p.Add("@FirstName", model.FirstName);
+                p.Add("@LastName", model.LastName);
+                p.Add("@EmailAddress", model.EmailAddress);
+                p.Add("@CellPhoneNumber", model.CellphoneNumber);
+                p.Add("@id", 0, DbType.Int32, ParameterDirection.Output);
+
+                connection.Execute("dbo.spPeople_Insert", p, commandType: CommandType.StoredProcedure);
+
+                model.ID = p.Get<int>("@id");
+
+                return model;
+            }
+        }
+
     }
 }

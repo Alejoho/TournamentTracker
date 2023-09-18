@@ -55,7 +55,7 @@
             this.teamNameValue.Location = new System.Drawing.Point(46, 110);
             this.teamNameValue.Name = "teamNameValue";
             this.teamNameValue.Size = new System.Drawing.Size(405, 35);
-            this.teamNameValue.TabIndex = 10;
+            this.teamNameValue.TabIndex = 1;
             // 
             // teamNameLabel
             // 
@@ -87,7 +87,7 @@
             this.addMemberButton.Location = new System.Drawing.Point(117, 261);
             this.addMemberButton.Name = "addMemberButton";
             this.addMemberButton.Size = new System.Drawing.Size(196, 51);
-            this.addMemberButton.TabIndex = 16;
+            this.addMemberButton.TabIndex = 3;
             this.addMemberButton.Text = "Add Member";
             this.addMemberButton.UseVisualStyleBackColor = true;
             // 
@@ -98,7 +98,7 @@
             this.selectTeamMemberDropDown.Location = new System.Drawing.Point(46, 207);
             this.selectTeamMemberDropDown.Name = "selectTeamMemberDropDown";
             this.selectTeamMemberDropDown.Size = new System.Drawing.Size(405, 38);
-            this.selectTeamMemberDropDown.TabIndex = 15;
+            this.selectTeamMemberDropDown.TabIndex = 2;
             // 
             // selectTeamMemberLabel
             // 
@@ -135,7 +135,7 @@
             this.cellPhoneValue.Location = new System.Drawing.Point(156, 199);
             this.cellPhoneValue.Name = "cellPhoneValue";
             this.cellPhoneValue.Size = new System.Drawing.Size(208, 43);
-            this.cellPhoneValue.TabIndex = 9;
+            this.cellPhoneValue.TabIndex = 7;
             // 
             // createMemberButton
             // 
@@ -147,7 +147,7 @@
             this.createMemberButton.Location = new System.Drawing.Point(71, 258);
             this.createMemberButton.Name = "createMemberButton";
             this.createMemberButton.Size = new System.Drawing.Size(196, 51);
-            this.createMemberButton.TabIndex = 16;
+            this.createMemberButton.TabIndex = 8;
             this.createMemberButton.Text = "Create Member";
             this.createMemberButton.UseVisualStyleBackColor = true;
             this.createMemberButton.Click += new System.EventHandler(this.createMemberButton_Click);
@@ -157,7 +157,7 @@
             this.lastNameValue.Location = new System.Drawing.Point(156, 98);
             this.lastNameValue.Name = "lastNameValue";
             this.lastNameValue.Size = new System.Drawing.Size(208, 43);
-            this.lastNameValue.TabIndex = 9;
+            this.lastNameValue.TabIndex = 5;
             // 
             // cellphoneLabel
             // 
@@ -184,7 +184,7 @@
             this.emailValue.Location = new System.Drawing.Point(156, 148);
             this.emailValue.Name = "emailValue";
             this.emailValue.Size = new System.Drawing.Size(208, 43);
-            this.emailValue.TabIndex = 7;
+            this.emailValue.TabIndex = 6;
             // 
             // emailLabel
             // 
@@ -201,7 +201,7 @@
             this.firstNameValue.Location = new System.Drawing.Point(156, 47);
             this.firstNameValue.Name = "firstNameValue";
             this.firstNameValue.Size = new System.Drawing.Size(208, 43);
-            this.firstNameValue.TabIndex = 7;
+            this.firstNameValue.TabIndex = 4;
             // 
             // firstNameLabel
             // 
@@ -233,7 +233,7 @@
             this.deleteSelectedMemberButton.Location = new System.Drawing.Point(1060, 348);
             this.deleteSelectedMemberButton.Name = "deleteSelectedMemberButton";
             this.deleteSelectedMemberButton.Size = new System.Drawing.Size(112, 70);
-            this.deleteSelectedMemberButton.TabIndex = 19;
+            this.deleteSelectedMemberButton.TabIndex = 10;
             this.deleteSelectedMemberButton.Text = "Delete Selected";
             this.deleteSelectedMemberButton.UseVisualStyleBackColor = true;
             // 
@@ -247,7 +247,7 @@
             this.createTournamentButton.Location = new System.Drawing.Point(373, 667);
             this.createTournamentButton.Name = "createTournamentButton";
             this.createTournamentButton.Size = new System.Drawing.Size(281, 55);
-            this.createTournamentButton.TabIndex = 20;
+            this.createTournamentButton.TabIndex = 9;
             this.createTournamentButton.Text = "Create Tournament";
             this.createTournamentButton.UseVisualStyleBackColor = true;
             // 
