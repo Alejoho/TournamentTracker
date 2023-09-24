@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TrackerLibrary.Models
+﻿namespace TrackerLibrary.Models
 {
     /// <summary>
     /// Represents one person.
@@ -31,5 +25,16 @@ namespace TrackerLibrary.Models
         /// The primary cell phone number of the person.
         /// </summary>
         public string CellphoneNumber { get; set; }
+
+        /// <summary>
+        /// The full name (first name + last name) of a person
+        /// </summary>
+        public string FullName
+        {
+            get
+            {
+                return $"{FirstName} {LastName}";
+            }
+        }
     }
 }
