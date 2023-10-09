@@ -85,7 +85,14 @@ namespace TrackerLibrary.DataAccess
 
                 model.Id = p.Get<int>("@Id");
 
+                foreach(PersonModel tm in model.TeamMembers)
+                {
+                    p = new DynamicParameters();
+                    p.Add("@TeamId", model.Id);
+                    p.Add("@PersonId", tm.ID);
 
+                    connection.Execute("dbo.spTeamMembers_Insert",p,commandType: CommandType.StoredProcedure);
+                }
 
                 return model;
             }
