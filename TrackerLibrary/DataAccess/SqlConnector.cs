@@ -69,6 +69,29 @@ namespace TrackerLibrary.DataAccess
         }
 
         /// <summary>
+        /// Gives and ID to the new team and save it to the database.
+        /// </summary>
+        /// <param name="model">The team model</param>
+        /// <returns>The team model, including the unique identifier and all its members.</returns>
+        public TeamModel CreateTeam(TeamModel model)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
+            {
+                DynamicParameters p = new DynamicParameters();
+                p.Add("@TeamName", model.TeamName);
+                p.Add("@Id", 0, DbType.Int32, ParameterDirection.Output);
+
+                connection.Execute("dbo.spTeams_Insert",p,commandType: CommandType.StoredProcedure);
+
+                model.Id = p.Get<int>("@Id");
+
+
+
+                return model;
+            }
+        }
+
+        /// <summary>
         /// Gets all the people.
         /// </summary>
         /// <returns>Returns a <c>List<PersonModel></c>.</returns>
