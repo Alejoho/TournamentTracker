@@ -69,7 +69,7 @@ CONSTRAINT [PK_Tournament_Entries] PRIMARY KEY CLUSTERED ([id]),
 GO
 CREATE TABLE [Teams](
 [id] [int] IDENTITY(1,1) NOT NULL,
-[TeamName] [nvarchar](50) NOT NULL,
+[TeamName] [nvarchar](100) NOT NULL,
 CONSTRAINT [PK_Teams] PRIMARY KEY CLUSTERED ([id]),
 );
 
@@ -299,9 +299,9 @@ END
 
 go
 -- =============================================
--- Author:		<Alejandro>
--- Create date: <9/10/2023>
--- Description:	<Inserts a prize in the Prizes tables and returns the id of that record>
+-- Author:		Alejandro
+-- Create date: 9/10/2023
+-- Description:	Inserts a prize in the Prizes tables and returns the id of that record.
 -- =============================================
 CREATE PROCEDURE dbo.spPrizes_Insert
 	@PlaceNumber int,
@@ -324,11 +324,10 @@ END
 GO
 
 
-
 -- =============================================
 -- Author:		Alejandro
 -- Create date: 9/18/2023
--- Description: Inserts a person in the People tables and returns the id of that record
+-- Description: Inserts a person in the People tables and returns the id of that record.
 -- =============================================
 CREATE PROCEDURE dbo.spPeople_Insert
 	@FirstName nvarchar(50),
@@ -347,3 +346,53 @@ BEGIN
 	select @id = SCOPE_IDENTITY();
 
 END
+
+
+GO
+
+
+-- =============================================
+-- Author:		Alejandro
+-- Create date: 10/9/2023
+-- Description: Inserts a team in the Teams tables and returns the id of that record.
+-- =============================================
+CREATE PROCEDURE dbo.spTeams_Insert
+	@TeamName nvarchar(100),
+	@Id int = 0 output
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	insert into Teams (TeamName)
+	values (@TeamName);
+
+	select @Id = SCOPE_IDENTITY();
+END
+
+
+GO
+
+
+-- =============================================
+-- Author:		Alejandro
+-- Create date: 10/9/2023
+-- Description: Inserts the relation between a team and a team member in the TeamMembers tables 
+-- and returns the id of that relation.
+-- =============================================
+CREATE PROCEDURE dbo.spTeamMembers_Insert
+	@TeamId int,
+	@PersonId int,
+	@id int = 0 output
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	insert into TeamMembers (TeamId,PersonId)
+	values (@TeamId,@PersonId);
+
+	select @id = SCOPE_IDENTITY();
+END
+
+
+
+
