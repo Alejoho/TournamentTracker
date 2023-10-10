@@ -18,6 +18,10 @@ namespace TrackerLibrary.DataAccess
         /// The name of the People text file with its extension.
         /// </summary>
         private const string PeopleFile = "PersonModels.csv";
+        /// <summary>
+        /// The name of the Team text file with its extension.
+        /// </summary>
+        private const string TeamFile = "TeamModels.csv";
 
         //TODO - Wire up the CreatePrize for text files.
         /// <summary>
@@ -74,14 +78,36 @@ namespace TrackerLibrary.DataAccess
             return model;
         }
 
+        /// <summary>
+        /// Gets all the people
+        /// </summary>
+        /// <returns>Returns a <c>List<PersonModel></c></returns>
         public List<PersonModel> GetPerson_All()
         {
             return PeopleFile.FullFilePath().LoadFile().ConvertToPersonModel();
         }
 
+        /// <summary>
+        /// Gives and ID to the new team and save it to the text file.
+        /// </summary>
+        /// <param name="model">The team model with all its members.</param>
+        /// <returns>The <c>TeamModel</c>, including the unique identifier.</returns>
         public TeamModel CreateTeam(TeamModel model)
         {
-            throw new NotImplementedException();
+            List<TeamModel> teams = TeamFile.FullFilePath().LoadFile().ConvertToTeamModel(PeopleFile);
+
+            int currentId = 1;
+
+            if (teams.Count > 0)
+                currentId = teams.OrderByDescending(x => x.Id).First().Id + 1;
+
+            model.Id = currentId;
+
+            teams.Add(model);
+
+            teams.SaveToTeamFile(TeamFile);
+
+            return model;
         }
     }
 }

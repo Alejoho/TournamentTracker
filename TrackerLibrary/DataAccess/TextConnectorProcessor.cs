@@ -90,6 +90,38 @@ namespace TrackerLibrary.DataAccess.TextHelpers
         }
 
         /// <summary>
+        /// Converts a <c>List<string></c> to a <c>List<TeamModel></c>.
+        /// </summary>
+        /// <param name="lines">The <c>List<string></c> that contains the information.</param>
+        /// <param name="peopleFileName">The name of the Team text file with its extension.</param>
+        /// <returns>Returns a <c>List<TeamModel></c>.</returns>
+        public static List<TeamModel> ConvertToTeamModel(this List<string> lines, string peopleFileName)
+        {
+            //id,team name,lis of ids separated by the pipe
+            //3,Tim's Team,1|3|5
+            List<TeamModel> output = new List<TeamModel>();
+            List<PersonModel> people = peopleFileName.FullFilePath().LoadFile().ConvertToPersonModel();
+
+            foreach (string line in lines)
+            {
+                string[] cols = line.Split(',');
+
+                TeamModel t = new TeamModel();
+                t.Id = int.Parse(cols[0]);
+                t.TeamName = cols[1];
+
+                string[] personIds = cols[2].Split('|');
+
+                foreach (string id in personIds)
+                {
+                    t.TeamMembers.Add(people.Where(x => x.ID == int.Parse(id)).First());
+                }
+            }
+
+            return output;
+        }
+
+        /// <summary>
         /// Saves a <c>List<PrizeModel></c> to a text file.
         /// </summary>
         /// <param name="models">The <c>List<PrizeModel></c>.</param>
@@ -121,6 +153,42 @@ namespace TrackerLibrary.DataAccess.TextHelpers
             }
 
             File.WriteAllLines(fileName.FullFilePath(), lines);
+        }
+
+        /// <summary>
+        /// Saves a <c>List<TeamModel></c> to a text file.
+        /// </summary>
+        /// <param name="models">The <c>List<TeamModel></c>.</param>
+        /// <param name="fileName">The file name in which to save the information with its extension.</param>
+        public static void SaveToTeamFile(this List<TeamModel> models, string fileName)
+        {
+            List<string> lines = new List<string>();
+
+            foreach(TeamModel t in models)
+            {
+                lines.Add($"{t.Id},{t.TeamName},{ConvertPeopleListToString(t.TeamMembers)}");
+            }
+
+            File.WriteAllLines(fileName.FullFilePath(), lines);
+        }
+
+        private static string ConvertPeopleListToString(List<PersonModel> teamMembers)
+        {
+            string output = "";
+
+            if (teamMembers.Count == 0)
+            {
+                return "";
+            }
+
+            foreach (PersonModel p in teamMembers) 
+            {
+                output += $"{p.ID}|";
+            }
+
+            output = output.Substring(0, output.Length - 1);
+
+            return output;
         }
     }
 }
