@@ -1,11 +1,7 @@
 ﻿using Dapper;
-using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TrackerLibrary.Models;
 
 //@PlaceNumber int,
@@ -51,7 +47,7 @@ namespace TrackerLibrary.DataAccess
         /// <returns>The person model, including the unique identifier.</returns>
         public PersonModel CreatePerson(PersonModel model)
         {
-            using(IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
             {
                 var p = new DynamicParameters();
                 p.Add("@FirstName", model.FirstName);
@@ -81,17 +77,17 @@ namespace TrackerLibrary.DataAccess
                 p.Add("@TeamName", model.TeamName);
                 p.Add("@Id", 0, DbType.Int32, ParameterDirection.Output);
 
-                connection.Execute("dbo.spTeams_Insert",p,commandType: CommandType.StoredProcedure);
+                connection.Execute("dbo.spTeams_Insert", p, commandType: CommandType.StoredProcedure);
 
                 model.Id = p.Get<int>("@Id");
 
-                foreach(PersonModel tm in model.TeamMembers)
+                foreach (PersonModel tm in model.TeamMembers)
                 {
                     p = new DynamicParameters();
                     p.Add("@TeamId", model.Id);
                     p.Add("@PersonId", tm.ID);
 
-                    connection.Execute("dbo.spTeamMembers_Insert",p,commandType: CommandType.StoredProcedure);
+                    connection.Execute("dbo.spTeamMembers_Insert", p, commandType: CommandType.StoredProcedure);
                 }
 
                 return model;
@@ -107,7 +103,24 @@ namespace TrackerLibrary.DataAccess
             List<PersonModel> output = new List<PersonModel>();
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
             {
-                output = connection.Query<PersonModel>("dbo.spPeople_GetAll",commandType: CommandType.StoredProcedure).ToList();
+                output = connection.Query<PersonModel>("dbo.spPeople_GetAll", commandType: CommandType.StoredProcedure).ToList();
+            }
+            return output;
+        }
+
+        public List<TeamModel> GetTeam_All()
+        {
+            List<TeamModel> output = new List<TeamModel>();
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
+            {
+                output = connection.Query<TeamModel>("dbo.spTeam_GetAll", commandType: CommandType.StoredProcedure).ToList();
+
+                foreach (TeamModel team in output)
+                {
+                    DynamicParameters p = new DynamicParameters();
+                    p.Add("@TeamId", team.Id);
+                    team.TeamMembers = connection.Query<PersonModel>("dbo.spTeamMembers_GetByTeam", p, commandType: CommandType.StoredProcedure).ToList();
+                }
             }
             return output;
         }
