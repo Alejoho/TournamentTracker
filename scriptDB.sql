@@ -48,6 +48,7 @@ CREATE TABLE [Tournaments](
 [id] [int] IDENTITY(1,1) NOT NULL,
 [TournamentName] [nvarchar](50) NOT NULL,
 [EntryFee] [money] NOT NULL,
+[Active] [bit] NOT NULL,
 CONSTRAINT [PK_Tournaments] PRIMARY KEY CLUSTERED ([id])
 --,
 --CONSTRAINT [DF_Tournaments_EntryFee] DEFAULT ((0)) FOR [EntryFee]
@@ -412,7 +413,75 @@ BEGIN
 END
 
 
+GO
+
+
+-- =============================================
+-- Author:		Alejandro
+-- Create date: 12/2/2023
+-- Description: Inserts a tournament in the Tournaments table and returns the id of that record.
+-- =============================================
+CREATE PROCEDURE dbo.spTournaments_Insert
+	@TournamentName nvarchar(50),
+	@EntryFee money,
+	@id int = 0 output
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	insert into Tournaments(TournamentName,EntryFee,Active)
+	values (@TournamentName,@EntryFee,1);
+
+	select @id = SCOPE_IDENTITY();
+END
+
+
+GO
 
 
 
+-- =============================================
+-- Author:		Alejandro
+-- Create date: 12/2/2023
+-- Description: Inserts the relation between a tournament and a prize in the TournamentPrizes table
+-- and returns the id of that relation.
+-- =============================================
+CREATE PROCEDURE dbo.spTournamentPrizes_Insert
+	@TournamentId int,
+	@PrizeId int,
+	@id int = 0 output
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	insert into TournamentPrizes(TournamentId,PrizeId)
+	values (@TournamentId,@PrizeId);
+
+	select @id = SCOPE_IDENTITY();
+END
+
+
+GO
+
+
+
+-- =============================================
+-- Author:		Alejandro
+-- Create date: 12/2/2023
+-- Description: Inserts the relation between a tournament and a team in the TournamentEntries table
+-- and returns the id of that relation.
+-- =============================================
+CREATE PROCEDURE dbo.spTournamentEntries_Insert
+	@TournamentId int,
+	@TeamId int,
+	@id int = 0 output
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	insert into TournamentEntries(TournamentId,TeamId)
+	values (@TournamentId,@TeamId);
+
+	select @id = SCOPE_IDENTITY();
+END
 

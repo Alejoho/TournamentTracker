@@ -38,12 +38,12 @@ namespace TrackerLibrary.DataAccess
             int currentId = 1;
 
             if( prizes.Count > 0 ) 
-                currentId = prizes.OrderByDescending(x => x.ID).First().ID + 1;
+                currentId = prizes.OrderByDescending(x => x.Id).First().Id + 1;
 
             //TODO - This is an alternative to the code of the line 34 through 37
             //int currentId = prizes.OrderByDescending(x => x.ID).Select(x => x.ID).FirstOrDefault() + 1;
 
-            model.ID = currentId;
+            model.Id = currentId;
 
             //Add the new record with the new ID (max + 1)
             prizes.Add(model);
@@ -67,9 +67,9 @@ namespace TrackerLibrary.DataAccess
             int currentId = 1;
 
             if (people.Count > 0)
-                currentId = people.OrderByDescending(x => x.ID).First().ID + 1;
+                currentId = people.OrderByDescending(x => x.Id).First().Id + 1;
 
-            model.ID = currentId;
+            model.Id = currentId;
 
             people.Add(model);
 
@@ -113,6 +113,11 @@ namespace TrackerLibrary.DataAccess
         public List<TeamModel> GetTeam_All()
         {
             return TeamFile.FullFilePath().LoadFile().ConvertToTeamModel(PeopleFile);
+        }
+
+        public TournamentModel CreateTournament(TournamentModel model)
+        {
+            throw new NotImplementedException();
         }
     }
 }

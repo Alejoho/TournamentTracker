@@ -56,7 +56,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers
             {
                 string[] cols = line.Split(',');
                 PrizeModel p = new PrizeModel();
-                p.ID = int.Parse(cols[0]);
+                p.Id = int.Parse(cols[0]);
                 p.PlaceNumber = int.Parse(cols[1]);
                 p.PlaceName = cols[2];
                 p.PrizeAmount = decimal.Parse(cols[3]);
@@ -79,7 +79,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers
             {
                 string[] cols = line.Split(',');
                 PersonModel p = new PersonModel();
-                p.ID = int.Parse(cols[0]);
+                p.Id = int.Parse(cols[0]);
                 p.FirstName = cols[1];
                 p.LastName = cols[2];
                 p.EmailAddress = cols[3];
@@ -114,7 +114,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers
 
                 foreach (string id in personIds)
                 {
-                    t.TeamMembers.Add(people.Where(x => x.ID == int.Parse(id)).First());
+                    t.TeamMembers.Add(people.Where(x => x.Id == int.Parse(id)).First());
                 }
             }
 
@@ -132,7 +132,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers
 
             foreach(PrizeModel p in models)
             {
-                lines.Add($"{ p.ID },{ p.PlaceNumber },{ p.PlaceName },{ p.PrizeAmount },{ p.PrizePercentage }");
+                lines.Add($"{ p.Id },{ p.PlaceNumber },{ p.PlaceName },{ p.PrizeAmount },{ p.PrizePercentage }");
             }
 
             File.WriteAllLines(fileName.FullFilePath(), lines);
@@ -149,7 +149,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers
 
             foreach (PersonModel p in models)
             {
-                lines.Add($"{ p.ID },{ p.FirstName },{ p.LastName },{ p.EmailAddress },{ p.CellphoneNumber }");
+                lines.Add($"{ p.Id },{ p.FirstName },{ p.LastName },{ p.EmailAddress },{ p.CellphoneNumber }");
             }
 
             File.WriteAllLines(fileName.FullFilePath(), lines);
@@ -183,7 +183,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers
 
             foreach (PersonModel p in teamMembers) 
             {
-                output += $"{p.ID}|";
+                output += $"{p.Id}|";
             }
 
             output = output.Substring(0, output.Length - 1);

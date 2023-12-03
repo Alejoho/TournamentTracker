@@ -8,7 +8,7 @@
         /// <summary>
         /// The unique identifier for the person.
         /// </summary>
-        public int ID { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// The first name of the person.
         /// </summary>
