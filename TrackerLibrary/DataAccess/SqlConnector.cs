@@ -100,7 +100,7 @@ namespace TrackerLibrary.DataAccess
         /// </summary>
         /// <param name="model">The tournament model</param>
         /// <returns>The tournament model, including the unique identifier and all its members.</returns>
-        public TournamentModel CreateTournament(TournamentModel model)
+        public void CreateTournament(TournamentModel model)
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
             {
@@ -109,8 +109,6 @@ namespace TrackerLibrary.DataAccess
                 SaveTournamentPrizes( connection,  model);
 
                 SaveTournamentEntries( connection,  model);
-
-                return model;
             }
         }
 
