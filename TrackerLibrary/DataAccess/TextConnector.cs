@@ -22,8 +22,11 @@ namespace TrackerLibrary.DataAccess
         /// The name of the Team text file with its extension.
         /// </summary>
         private const string TeamFile = "TeamModels.csv";
+        /// <summary>
+        /// The name of the Tournament text file with its extension.
+        /// </summary>
+        private const string TournamentFile = "TournamentModels.csv";
 
-        //TODO - Wire up the CreatePrize for text files.
         /// <summary>
         /// Gives and ID to the new prize and save it to the text file.
         /// </summary>
@@ -117,7 +120,10 @@ namespace TrackerLibrary.DataAccess
 
         public TournamentModel CreateTournament(TournamentModel model)
         {
-            throw new NotImplementedException();
+            List<TournamentModel> tournaments = TournamentFile.
+                FullFilePath().
+                LoadFile().
+                ConvertToTournamentModel(TeamFile, PeopleFile,PrizesFile);
         }
     }
 }

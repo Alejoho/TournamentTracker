@@ -8,13 +8,6 @@ using System.Threading.Tasks;
 using TrackerLibrary.Models;
 using System.Data;
 
-// * Load the text file
-// * Convert the text to List<PrizeModel>
-//Find the max ID
-//Add the new record with the new ID (max + 1)
-//Convert the prizes to list<string>
-//Save the list<string> to the text file
-
 namespace TrackerLibrary.DataAccess.TextHelpers
 {
     public static class TextConnectorProcessor
@@ -119,6 +112,53 @@ namespace TrackerLibrary.DataAccess.TextHelpers
             }
 
             return output;
+        }
+
+
+        public static List<TournamentModel> ConvertToTournamentModel(
+            this List<string> lines, 
+            string teamFileName, 
+            string peopleFileName, 
+            string prizeFileName)
+        {
+            //id = 0
+            //TournamentName = 1
+            //EntryFee = 2
+            //EnteredTeams = 3
+            //Prizes = 4
+            //Rounds = 5
+            //id,TournamentName,EntryFeee,(id|id|id - Entered Teams), (id|id|id - Prizes), (Rounds - id^id^id|id^id^id|id^id^id)
+            List<TournamentModel> tournaments = new List<TournamentModel>();
+            List<TeamModel> teams = teamFileName.FullFilePath().LoadFile().ConvertToTeamModel(peopleFileName);
+            List<PrizeModel> prizes = prizeFileName.FullFilePath().LoadFile().ConvertToPrizeModel();
+
+            foreach (string line in lines)
+            {
+                string[] cols = line.Split(',');
+
+                TournamentModel tm = new TournamentModel();
+                tm.Id = int.Parse(cols[0]);
+                tm.TournamentName = cols[1];
+                tm.EntryFee = decimal.Parse(cols[2]);
+
+                string[] teamIds = cols[3].Split('|');
+
+                foreach(string id in teamIds)
+                {                    
+                    tm.EnteredTeams.Add(teams.Where(x => x.Id == int.Parse(id)).First());
+                }
+
+                string[] prizeIds = cols[4].Split('|');
+
+                foreach(string id in prizeIds)
+                {
+                    tm.Prizes.Add(prizes.Where(x => x.Id == int.Parse(id)).First());
+                }
+
+                //TODO - Capture Rounds information
+
+                tournaments.Add(tm);
+            }
         }
 
         /// <summary>
