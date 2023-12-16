@@ -98,7 +98,8 @@ CONSTRAINT [PK_People] PRIMARY KEY CLUSTERED ([id])
 GO
 CREATE TABLE [Matchups](
 [id] [int] IDENTITY(1,1) NOT NULL,
-[WinnerId] [int] NOT NULL,
+[TournamentId] [int] NOT NULL,
+[WinnerId] [int],
 [MatchupRound] [int] NOT NULL,
 CONSTRAINT [PK_Matchups] PRIMARY KEY CLUSTERED ([id])
 );
@@ -109,7 +110,7 @@ CREATE TABLE [MatchupEntries](
 [id] [int] IDENTITY(1,1) NOT NULL,
 [MatchupId] [int] NOT NULL,
 [ParentMatchupId] [int] NOT NULL,
-[TeamCompetingId] [int] NOT NULL,
+[TeamCompetingId] [int],
 [Score] [int],
 CONSTRAINT [PK_Matchup_Entries] PRIMARY KEY CLUSTERED ([id])
 );
@@ -145,6 +146,10 @@ REFERENCES [People] ([id]);
 GO
 ALTER TABLE [Matchups] ADD CONSTRAINT [FK_Matchups_WinnerId] FOREIGN KEY ([WinnerId])
 REFERENCES [Teams] ([id]);
+
+GO
+ALTER TABLE [Matchups] ADD CONSTRAINT [FK_Matchups_TournamentId] FOREIGN KEY (TournamentId)
+REFERENCES [Tournaments] ([id]);
 
 GO
 ALTER TABLE [MatchupEntries] ADD CONSTRAINT [FK_MatchupEntries_MatchupId] FOREIGN KEY ([MatchupId])
