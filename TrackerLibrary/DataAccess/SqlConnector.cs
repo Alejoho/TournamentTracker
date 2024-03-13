@@ -202,6 +202,38 @@ namespace TrackerLibrary.DataAccess
                     connection.Execute("dbo.spMatchups_Insert", p, commandType: CommandType.StoredProcedure);
 
                     matchup.Id = p.Get<int>("@Id");
+
+                    foreach(MatchupEntryModel entry in matchup.Entries)
+                    {
+                        //@MatchupId int,
+                        //@ParentMatchupId int,
+                        //@TeamCompetingId int,
+
+                        p = new DynamicParameters();
+                        p.Add("@MatchupId", matchup.Id);
+
+                        if (entry.ParentMatchup == null)
+                        {
+                            p.Add("@ParentMatchupId", null);
+                        }
+                        else
+                        {
+                            p.Add("@ParentMatchupId", entry.ParentMatchup.Id);
+                        }
+
+                        if (entry.TeamCompeting == null)
+                        {
+                            p.Add("@TeamCompetingId", null);
+                        }
+                        else
+                        {
+                            p.Add("@TeamCompetingId", entry.TeamCompeting.Id);
+                        }
+
+                        p.Add("@Id", 0, DbType.Int32, ParameterDirection.Output);
+
+                        connection.Execute("dbo.spMatchupEntries_Insert", p, commandType: CommandType.StoredProcedure);
+                    }
                 }
             }
         }

@@ -520,7 +520,7 @@ END
 -- Create date: 2/4/2024
 -- Description: Inserts a new matchup entry.
 -- =============================================
-CREATE PROCEDURE dbo.spMatchupentries_Insert
+CREATE PROCEDURE dbo.spMatchupEntries_Insert
 	@MatchupId int,
 	@ParentMatchupId int,
 	@TeamCompetingId int,

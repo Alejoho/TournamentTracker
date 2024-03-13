@@ -9,7 +9,7 @@ namespace TrackerLibrary
 {
     public static class TournamentLogic
     {
-        //Order our list randomly of teans
+        //Order our list randomly of teams
         //Check if it is big enough - if not, add in byes - 2*2*2*2 - 2^4
         //Create our first rounf of matchups
         //Create every round after that - 8 matchups - 4 matchups -  2 matchups -  1 matchups
@@ -21,6 +21,8 @@ namespace TrackerLibrary
             int byes = NumberOfByes(rounds, randomizedTeams.Count);
 
             model.Rounds.Add(CreateFirstRound(byes, randomizedTeams));
+
+            CreateOtherRounds(model, rounds);
         }
 
         private static void CreateOtherRounds(TournamentModel model, int rounds)
