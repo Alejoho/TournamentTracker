@@ -26,6 +26,14 @@ namespace TrackerLibrary.DataAccess
         /// The name of the Tournament text file with its extension.
         /// </summary>
         private const string TournamentFile = "TournamentModels.csv";
+        /// <summary>
+        /// The name of the Matchup text file with its extension.
+        /// </summary>
+        private const string MatchupFile = "MatchupModels.csv";
+        /// <summary>
+        /// The name of the Matchup Entries text file with its extension.
+        /// </summary>
+        private const string MatchupEntryFile = "MatchupEntryModels.csv";
 
         /// <summary>
         /// Gives and ID to the new prize and save it to the text file.
@@ -35,7 +43,7 @@ namespace TrackerLibrary.DataAccess
         public PrizeModel CreatePrize(PrizeModel model)
         {
             //Load the text file and convert the text to List<PrizeModel>
-            List<PrizeModel> prizes = PrizesFile.FullFilePath().LoadFile().ConvertToPrizeModel();
+            List<PrizeModel> prizes = PrizesFile.FullFilePath().LoadFile().ConvertToPrizeModels();
 
             //Find the max ID
             int currentId = 1;
@@ -65,7 +73,7 @@ namespace TrackerLibrary.DataAccess
         /// <returns>The person model, including the unique identifier.</returns>
         public PersonModel CreatePerson(PersonModel model)
         {
-            List<PersonModel> people = PeopleFile.FullFilePath().LoadFile().ConvertToPersonModel();
+            List<PersonModel> people = PeopleFile.FullFilePath().LoadFile().ConvertToPersonModels();
 
             int currentId = 1;
 
@@ -87,7 +95,7 @@ namespace TrackerLibrary.DataAccess
         /// <returns>Returns a <c>List<PersonModel></c></returns>
         public List<PersonModel> GetPerson_All()
         {
-            return PeopleFile.FullFilePath().LoadFile().ConvertToPersonModel();
+            return PeopleFile.FullFilePath().LoadFile().ConvertToPersonModels();
         }
 
         /// <summary>
@@ -97,7 +105,7 @@ namespace TrackerLibrary.DataAccess
         /// <returns>The <c>TeamModel</c>, including the unique identifier.</returns>
         public TeamModel CreateTeam(TeamModel model)
         {
-            List<TeamModel> teams = TeamFile.FullFilePath().LoadFile().ConvertToTeamModel(PeopleFile);
+            List<TeamModel> teams = TeamFile.FullFilePath().LoadFile().ConvertToTeamModels(PeopleFile);
 
             int currentId = 1;
 
@@ -115,7 +123,7 @@ namespace TrackerLibrary.DataAccess
 
         public List<TeamModel> GetTeam_All()
         {
-            return TeamFile.FullFilePath().LoadFile().ConvertToTeamModel(PeopleFile);
+            return TeamFile.FullFilePath().LoadFile().ConvertToTeamModels(PeopleFile);
         }
 
         public void CreateTournament(TournamentModel model)
@@ -123,14 +131,18 @@ namespace TrackerLibrary.DataAccess
             List<TournamentModel> tournaments = TournamentFile.
                 FullFilePath().
                 LoadFile().
-                ConvertToTournamentModel(TeamFile, PeopleFile,PrizesFile);
+                ConvertToTournamentModels(TeamFile, PeopleFile,PrizesFile);
 
             int currentId = 1;
 
             if (tournaments.Count > 0)
+            {
                 currentId = tournaments.OrderByDescending(x => x.Id).First().Id + 1;
+            }
 
             model.Id = currentId;
+
+            model.SaveRoundsToFile(MatchupFile, MatchupEntryFile);
 
             tournaments.Add(model);
 

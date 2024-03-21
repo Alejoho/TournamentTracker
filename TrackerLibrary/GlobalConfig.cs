@@ -11,6 +11,32 @@ namespace TrackerLibrary
     public static class GlobalConfig
     {
         /// <summary>
+        /// The name of the Prize text file with its extension.
+        /// </summary>
+        public const string PrizesFile = "PrizeModels.csv";
+        /// <summary>
+        /// The name of the People text file with its extension.
+        /// </summary>
+        public const string PeopleFile = "PersonModels.csv";
+        /// <summary>
+        /// The name of the Team text file with its extension.
+        /// </summary>
+        public const string TeamFile = "TeamModels.csv";
+        /// <summary>
+        /// The name of the Tournament text file with its extension.
+        /// </summary>
+        public const string TournamentFile = "TournamentModels.csv";
+        /// <summary>
+        /// The name of the Matchup text file with its extension.
+        /// </summary>
+        public const string MatchupFile = "MatchupModels.csv";
+        /// <summary>
+        /// The name of the Matchup Entries text file with its extension.
+        /// </summary>
+        public const string MatchupEntryFile = "MatchupEntryModels.csv";
+
+
+        /// <summary>
         /// The actual connection set to use in the application
         /// </summary>
         public static IDataConnection Connection { get; private set; }
