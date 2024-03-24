@@ -201,10 +201,8 @@ BEGIN
 
 	select m.* 
 	from Matchups as m 
-	inner join Teams as tm on m.WinnerId = tm.id
-	inner join TournamentEntries as te on tm.id = te.TeamId
-	inner join Tournaments as t on te.TournamentId = t.id
-	where t.id = @TournamentId;
+	where m.TournamentId = @TournamentId
+	order by MatchupRound;
 
 END
 
@@ -255,11 +253,10 @@ BEGIN
 
 	SET NOCOUNT ON;
 
-	select tm.* 
-	from Teams as tm	
-	inner join TournamentEntries as te on tm.id = te.TeamId
-	inner join Tournaments as t on te.TournamentId = t.id
-	where t.id = @TournamentId;
+	select t.* 
+	from Teams as t	
+	inner join TournamentEntries as e on t.id = e.TeamId
+	where e.TournamentId = @TournamentId;
 
 END
 
@@ -297,7 +294,8 @@ BEGIN
 	SET NOCOUNT ON;
 
 	select *
-	from Tournaments;
+	from Tournaments
+	where Active=1;;
 
 END
 
