@@ -40,7 +40,7 @@ namespace TrackerLibrary.DataAccess
         /// </summary>
         /// <param name="model">The prize model.</param>
         /// <returns>The prize model, including the unique identifier.</returns>
-        public PrizeModel CreatePrize(PrizeModel model)
+        public void CreatePrize(PrizeModel model)
         {
             //Load the text file and convert the text to List<PrizeModel>
             List<PrizeModel> prizes = PrizesFile.FullFilePath().LoadFile().ConvertToPrizeModels();
@@ -62,8 +62,6 @@ namespace TrackerLibrary.DataAccess
             //Convert the prizes to list<string>
             //Save the list<string> to the text file
             prizes.SaveToPrizeFile(PrizesFile);
-
-            return model;
         }
 
         /// <summary>
@@ -71,7 +69,7 @@ namespace TrackerLibrary.DataAccess
         /// </summary>
         /// <param name="model">The person model.</param>
         /// <returns>The person model, including the unique identifier.</returns>
-        public PersonModel CreatePerson(PersonModel model)
+        public void CreatePerson(PersonModel model)
         {
             List<PersonModel> people = PeopleFile.FullFilePath().LoadFile().ConvertToPersonModels();
 
@@ -85,8 +83,6 @@ namespace TrackerLibrary.DataAccess
             people.Add(model);
 
             people.SaveToPeopleFile(PeopleFile);
-
-            return model;
         }
 
         /// <summary>
@@ -103,7 +99,7 @@ namespace TrackerLibrary.DataAccess
         /// </summary>
         /// <param name="model">The team model with all its members.</param>
         /// <returns>The <c>TeamModel</c>, including the unique identifier.</returns>
-        public TeamModel CreateTeam(TeamModel model)
+        public void CreateTeam(TeamModel model)
         {
             List<TeamModel> teams = TeamFile.FullFilePath().LoadFile().ConvertToTeamModels(PeopleFile);
 
@@ -117,8 +113,6 @@ namespace TrackerLibrary.DataAccess
             teams.Add(model);
 
             teams.SaveToTeamFile(TeamFile);
-
-            return model;
         }
 
         public List<TeamModel> GetTeam_All()

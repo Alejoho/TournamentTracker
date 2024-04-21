@@ -4,12 +4,6 @@ using System.Data;
 using System.Linq;
 using TrackerLibrary.Models;
 
-//@PlaceNumber int,
-//@PlaceName nvarchar(50),
-//@PrizeAmount money,
-//@PrizePercentage float,
-//@id int = 0 output
-
 namespace TrackerLibrary.DataAccess
 {
     public class SqlConnector : IDataConnection
@@ -21,7 +15,7 @@ namespace TrackerLibrary.DataAccess
         /// </summary>
         /// <param name="model">The prize model.</param>
         /// <returns>The prize model, including the unique identifier.</returns>
-        public PrizeModel CreatePrize(PrizeModel model)
+        public void CreatePrize(PrizeModel model)
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
             {
@@ -35,8 +29,6 @@ namespace TrackerLibrary.DataAccess
                 connection.Execute("dbo.spPrizes_Insert", p, commandType: CommandType.StoredProcedure);
 
                 model.Id = p.Get<int>("@id");
-
-                return model;
             }
         }
 
@@ -45,7 +37,7 @@ namespace TrackerLibrary.DataAccess
         /// </summary>
         /// <param name="model">The person model.</param>
         /// <returns>The person model, including the unique identifier.</returns>
-        public PersonModel CreatePerson(PersonModel model)
+        public void CreatePerson(PersonModel model)
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
             {
@@ -59,8 +51,6 @@ namespace TrackerLibrary.DataAccess
                 connection.Execute("dbo.spPeople_Insert", p, commandType: CommandType.StoredProcedure);
 
                 model.Id = p.Get<int>("@id");
-
-                return model;
             }
         }
 
@@ -69,7 +59,7 @@ namespace TrackerLibrary.DataAccess
         /// </summary>
         /// <param name="model">The team model</param>
         /// <returns>The team model, including the unique identifier and all its members.</returns>
-        public TeamModel CreateTeam(TeamModel model)
+        public void CreateTeam(TeamModel model)
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
             {
@@ -89,8 +79,6 @@ namespace TrackerLibrary.DataAccess
 
                     connection.Execute("dbo.spTeamMembers_Insert", p, commandType: CommandType.StoredProcedure);
                 }
-
-                return model;
             }
         }
 
