@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TrackerLibrary.Models;
 using TrackerLibrary.DataAccess.TextHelpers;
+using TrackerLibrary.Models;
 
 namespace TrackerLibrary.DataAccess
 {
@@ -23,7 +20,7 @@ namespace TrackerLibrary.DataAccess
             //Find the max ID
             int currentId = 1;
 
-            if( prizes.Count > 0 ) 
+            if (prizes.Count > 0)
                 currentId = prizes.OrderByDescending(x => x.Id).First().Id + 1;
 
             //TODO - This is an alternative to the code of the line 34 through 37
@@ -116,6 +113,8 @@ namespace TrackerLibrary.DataAccess
             tournaments.Add(model);
 
             tournaments.SaveToTournamentFile();
+
+            TournamentLogic.UpdateTournamentResults(model);
         }
 
         public List<TournamentModel> GetTournament_All()
