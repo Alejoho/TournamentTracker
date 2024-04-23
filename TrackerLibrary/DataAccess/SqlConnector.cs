@@ -101,7 +101,7 @@ namespace TrackerLibrary.DataAccess
 
                 SaveTournamentRounds(connection, model);
 
-                //TournamentLogic.UpdateTournamentResults(model);
+                TournamentLogic.UpdateTournamentResults(model);
             }
         }
 
@@ -224,6 +224,8 @@ namespace TrackerLibrary.DataAccess
                         p.Add("@Id", 0, DbType.Int32, ParameterDirection.Output);
 
                         connection.Execute("dbo.spMatchupEntries_Insert", p, commandType: CommandType.StoredProcedure);
+
+                        entry.Id = p.Get<int>("@Id");
                     }
                 }
             }
