@@ -28,9 +28,9 @@ namespace TrackerLibrary
         {
             List<MatchupModel> toScore = new List<MatchupModel>();
 
-            foreach (List<MatchupModel> matchups in model.Rounds)
+            foreach (List<MatchupModel> round in model.Rounds)
             {
-                foreach (MatchupModel rm in matchups)
+                foreach (MatchupModel rm in round)
                 {
                     if (rm.Winner == null && (rm.Entries.Any(x => x.Score != 0) || rm.Entries.Count == 1))
                     {
@@ -74,6 +74,7 @@ namespace TrackerLibrary
         {
             //greater or lesser
             string greaterWins = ConfigurationManager.AppSettings["greaterWins"];
+
             foreach (MatchupModel m in models)
             {
                 //Checks for bye week entry
@@ -101,7 +102,7 @@ namespace TrackerLibrary
                 }
                 else
                 {
-                    //1 mean trye, or high score wins
+                    //1 mean true, or high score wins
                     if (m.Entries[0].Score > m.Entries[1].Score)
                     {
                         m.Winner = m.Entries[0].TeamCompeting;
