@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Configuration;
 using TrackerLibrary.DataAccess;
 
 namespace TrackerLibrary
@@ -47,7 +42,7 @@ namespace TrackerLibrary
         /// <param name="db">The type of connetion you want to initialize.</param>
         public static void InitializeConnections(DatabaseType db)
         {
-            if(db==DatabaseType.Sql)
+            if (db == DatabaseType.Sql)
             {
                 //TODO - Set up the SQL Connector properly
                 SqlConnector sql = new SqlConnector();

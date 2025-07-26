@@ -75,7 +75,7 @@ namespace TrackerUI
         }
 
         private void removeSelectedPlayersButton_Click(object sender, System.EventArgs e)
-        {        
+        {
             TeamModel t = (TeamModel)tournamentTeamsListBox.SelectedItem;
             if (t != null)
             {
@@ -102,13 +102,13 @@ namespace TrackerUI
             // Validate data
             decimal fee = 0;
 
-            bool feeAcceptable = decimal.TryParse(entryFeeValue.Text,out fee);
+            bool feeAcceptable = decimal.TryParse(entryFeeValue.Text, out fee);
 
             if (!feeAcceptable)
             {
                 MessageBox.Show("",
                     "Invalid fee",
-                    MessageBoxButtons.OK, 
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
                 return;
             }

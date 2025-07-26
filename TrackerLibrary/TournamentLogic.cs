@@ -78,7 +78,7 @@ namespace TrackerLibrary
             foreach (MatchupModel m in models)
             {
                 //Checks for bye week entry
-                if(m.Entries.Count == 1)
+                if (m.Entries.Count == 1)
                 {
                     m.Winner = m.Entries[0].TeamCompeting;
                     continue;
@@ -94,7 +94,7 @@ namespace TrackerLibrary
                     else if (m.Entries[1].Score < m.Entries[0].Score)
                     {
                         m.Winner = m.Entries[1].TeamCompeting;
-                    } 
+                    }
                     else
                     {
                         throw new Exception("We do not allow ties in this application.");

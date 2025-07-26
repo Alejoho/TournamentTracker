@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TrackerLibrary.Models
+﻿namespace TrackerLibrary.Models
 {
     /// <summary>
     /// Represents one team in a matchup.
@@ -36,6 +30,6 @@ namespace TrackerLibrary.Models
         /// Represents the machup that this team came 
         /// from as the winner.
         /// </summary>
-        public MatchupModel ParentMatchup { get; set; }       
+        public MatchupModel ParentMatchup { get; set; }
     }
 }

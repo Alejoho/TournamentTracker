@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TrackerLibrary.Models
+﻿namespace TrackerLibrary.Models
 {
     /// <summary>
     /// Represents the characteristic of one place.
@@ -22,7 +16,7 @@ namespace TrackerLibrary.Models
         /// <summary>
         /// The name of the place.
         /// </summary>
-        public string PlaceName{ get; set; }
+        public string PlaceName { get; set; }
         /// <summary>
         /// The flat number that this place earns.
         /// </summary>
@@ -36,7 +30,7 @@ namespace TrackerLibrary.Models
         /// </summary>
         public PrizeModel()
         {
-            
+
         }
         /// <summary>
         /// This Constructor populates the properties of this object

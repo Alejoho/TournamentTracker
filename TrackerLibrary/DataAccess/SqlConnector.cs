@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using TrackerLibrary.Models;
-using TrackerLibrary;
 
 
 namespace TrackerLibrary.DataAccess
@@ -329,7 +328,7 @@ namespace TrackerLibrary.DataAccess
 
                     foreach (MatchupModel m in matchups)
                     {
-                        if(m.MatchupRound >currRound)
+                        if (m.MatchupRound > currRound)
                         {
                             t.Rounds.Add(currRow);
                             currRow = new List<MatchupModel>();
@@ -357,7 +356,7 @@ namespace TrackerLibrary.DataAccess
                     p.Add("@id", model.Id);
                     p.Add("@WinnerId", model.Winner.Id);
 
-                    connection.Execute("dbo.spMatchups_Update", p, commandType: CommandType.StoredProcedure); 
+                    connection.Execute("dbo.spMatchups_Update", p, commandType: CommandType.StoredProcedure);
                 }
 
                 foreach (MatchupEntryModel me in model.Entries)
@@ -369,7 +368,7 @@ namespace TrackerLibrary.DataAccess
                         p.Add("@TeamCompetingId", me.TeamCompeting.Id);
                         p.Add("@Score", me.Score);
 
-                        connection.Execute("dbo.spMatchupEntries_Update", p, commandType: CommandType.StoredProcedure); 
+                        connection.Execute("dbo.spMatchupEntries_Update", p, commandType: CommandType.StoredProcedure);
                     }
                 }
             }
