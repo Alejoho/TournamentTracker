@@ -109,7 +109,7 @@ GO
 CREATE TABLE [MatchupEntries](
 [id] [int] IDENTITY(1,1) NOT NULL,
 [MatchupId] [int] NOT NULL,
-[ParentMatchupId] [int] NOT NULL,
+[ParentMatchupId] [int],
 [TeamCompetingId] [int],
 [Score] [int],
 CONSTRAINT [PK_Matchup_Entries] PRIMARY KEY CLUSTERED ([id])
