@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Text;
 using TrackerLibrary.Models;
 
 namespace TrackerLibrary
@@ -26,6 +27,8 @@ namespace TrackerLibrary
 
         public static void UpdateTournamentResults(TournamentModel model)
         {
+            int startingRound = model.CheckCurrentRound();
+
             List<MatchupModel> toScore = new List<MatchupModel>();
 
             foreach (List<MatchupModel> round in model.Rounds)
@@ -44,6 +47,82 @@ namespace TrackerLibrary
             AdvanceWinners(toScore, model);
 
             toScore.ForEach(x => GlobalConfig.Connection.UpdateMatchup(x));
+
+            int endingRound = model.CheckCurrentRound();
+
+            if (endingRound > startingRound)
+            {
+                model.AlertUsersToNewRound();
+            }
+        }
+
+        public static void AlertUsersToNewRound(this TournamentModel model)
+        {
+            int currentRoundNumber = model.CheckCurrentRound();
+            List<MatchupModel> currentRound = model.Rounds
+                .First(x => x.First().MatchupRound == currentRoundNumber);
+
+            foreach (MatchupModel matchup in currentRound)
+            {
+                foreach (MatchupEntryModel entry in matchup.Entries)
+                {
+                    foreach (PersonModel p in entry.TeamCompeting.TeamMembers)
+                    {
+                        AlertPersonToNewRound(p,
+                            entry.TeamCompeting.TeamName,
+                            matchup.Entries.FirstOrDefault(x => x.TeamCompeting != entry.TeamCompeting));
+                    }
+                }
+            }
+        }
+
+        private static void AlertPersonToNewRound(PersonModel p, string teamName, MatchupEntryModel competitor)
+        {
+            if (p.EmailAddress.Length == 0)
+            {
+                return;
+            }
+
+            string to = string.Empty;
+            string subject = string.Empty;
+            StringBuilder body = new StringBuilder();
+
+            if (competitor != null)
+            {
+                subject = $"You have a new matchupt with {competitor.TeamCompeting.TeamName}";
+                body.AppendLine("<h1>You have a new matchupt</h1>");
+                body.Append("<strong>Competitor:</strong> ");
+                body.Append(competitor.TeamCompeting.TeamName);
+                body.AppendLine();
+                body.AppendLine();
+                body.AppendLine("<p>Have a great time!</p>");
+                body.AppendLine("<p>~Tournament Tracker</p>");
+            }
+            else
+            {
+                subject = "You have a bye week this round";
+                body.AppendLine("<p>Enjoy your round off</p>");
+                body.AppendLine("<p>~Tournament Tracker</p>");
+            }
+
+            to = p.EmailAddress;
+
+            EmailLogic.SendEmail(to, subject, body.ToString());
+        }
+
+        private static int CheckCurrentRound(this TournamentModel model)
+        {
+            int output = 1;
+
+            foreach (List<MatchupModel> round in model.Rounds)
+            {
+                if (round.All(x => x.Winner != null))
+                {
+                    output++;
+                }
+            }
+
+            return output;
         }
 
         private static void AdvanceWinners(List<MatchupModel> models, TournamentModel tournament)

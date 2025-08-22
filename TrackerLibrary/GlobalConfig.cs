@@ -66,5 +66,15 @@ namespace TrackerLibrary
         {
             return ConfigurationManager.ConnectionStrings[name].ConnectionString;
         }
+
+        /// <summary>
+        /// Looks up the value for the passed key in App.config.
+        /// </summary>
+        /// <param name="key">The key to look up its value.</param>
+        /// <returns>The value for the key</returns>
+        public static string AppKeyLookup(string key)
+        {
+            return ConfigurationManager.AppSettings[key];
+        }
     }
 }
