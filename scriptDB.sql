@@ -1,4 +1,4 @@
-GO 
+GO
 USE [master];
 
 GO
@@ -15,16 +15,17 @@ USE [Tournaments];
 
 
 GO
-CREATE TABLE [Prizes](
-[id] [int] IDENTITY(1,1) NOT NULL,
-[PlaceNumber] [int] NOT NULL,
-[PlaceName] [nvarchar](50) NOT NULL,
-[PrizeAmount] [money] NOT NULL,
-[PrizePercentage] [float] NOT NULL,
-CONSTRAINT [PK_Prizes] PRIMARY KEY CLUSTERED ([id])
---,
---CONSTRAINT [DF_Prizes_PrizeAmount] DEFAULT ((0)) FOR [PrizeAmount],
---CONSTRAINT [DF_Prizes_PrizePercentage] DEFAULT ((0)) FOR [PrizePercentage]
+CREATE TABLE [Prizes]
+(
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[PlaceNumber] [int] NOT NULL,
+	[PlaceName] [nvarchar](50) NOT NULL,
+	[PrizeAmount] [money] NOT NULL,
+	[PrizePercentage] [float] NOT NULL,
+	CONSTRAINT [PK_Prizes] PRIMARY KEY CLUSTERED ([id])
+	--,
+	--CONSTRAINT [DF_Prizes_PrizeAmount] DEFAULT ((0)) FOR [PrizeAmount],
+	--CONSTRAINT [DF_Prizes_PrizePercentage] DEFAULT ((0)) FOR [PrizePercentage]
 );
 
 GO
@@ -35,23 +36,25 @@ ALTER TABLE [Prizes] ADD CONSTRAINT [DF_Prizes_PrizePercentage] DEFAULT ((0)) FO
 
 
 GO
-CREATE TABLE [TournamentPrizes](
-[id] [int] IDENTITY(1,1) NOT NULL,
-[TournamentId] [int] NOT NULL,
-[PrizeId] [int] NOT NULL,
-CONSTRAINT [PK_Tournament_Prizes] PRIMARY KEY CLUSTERED ([id])
+CREATE TABLE [TournamentPrizes]
+(
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[TournamentId] [int] NOT NULL,
+	[PrizeId] [int] NOT NULL,
+	CONSTRAINT [PK_Tournament_Prizes] PRIMARY KEY CLUSTERED ([id])
 );
 
 
 GO
-CREATE TABLE [Tournaments](
-[id] [int] IDENTITY(1,1) NOT NULL,
-[TournamentName] [nvarchar](50) NOT NULL,
-[EntryFee] [money] NOT NULL,
-[Active] [bit] NOT NULL,
-CONSTRAINT [PK_Tournaments] PRIMARY KEY CLUSTERED ([id])
---,
---CONSTRAINT [DF_Tournaments_EntryFee] DEFAULT ((0)) FOR [EntryFee]
+CREATE TABLE [Tournaments]
+(
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[TournamentName] [nvarchar](50) NOT NULL,
+	[EntryFee] [money] NOT NULL,
+	[Active] [bit] NOT NULL,
+	CONSTRAINT [PK_Tournaments] PRIMARY KEY CLUSTERED ([id])
+	--,
+	--CONSTRAINT [DF_Tournaments_EntryFee] DEFAULT ((0)) FOR [EntryFee]
 );
 
 GO
@@ -59,60 +62,66 @@ ALTER TABLE [Tournaments] ADD CONSTRAINT [DF_Tournaments_EntryFee] DEFAULT ((0))
 
 
 GO
-CREATE TABLE [TournamentEntries](
-[id] [int] IDENTITY(1,1) NOT NULL,
-[TournamentId] [int] NOT NULL,
-[TeamId] [int] NOT NULL,
-CONSTRAINT [PK_Tournament_Entries] PRIMARY KEY CLUSTERED ([id]),
+CREATE TABLE [TournamentEntries]
+(
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[TournamentId] [int] NOT NULL,
+	[TeamId] [int] NOT NULL,
+	CONSTRAINT [PK_Tournament_Entries] PRIMARY KEY CLUSTERED ([id]),
 );
 
 
 GO
-CREATE TABLE [Teams](
-[id] [int] IDENTITY(1,1) NOT NULL,
-[TeamName] [nvarchar](100) NOT NULL,
-CONSTRAINT [PK_Teams] PRIMARY KEY CLUSTERED ([id]),
+CREATE TABLE [Teams]
+(
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[TeamName] [nvarchar](100) NOT NULL,
+	CONSTRAINT [PK_Teams] PRIMARY KEY CLUSTERED ([id]),
 );
 
 
 GO
-CREATE TABLE [TeamMembers](
-[id] [int] IDENTITY(1,1) NOT NULL,
-[TeamId] [int] NOT NULL,
-[PersonId] [int] NOT NULL,
-CONSTRAINT [PK_Team_Members] PRIMARY KEY CLUSTERED ([id])
+CREATE TABLE [TeamMembers]
+(
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[TeamId] [int] NOT NULL,
+	[PersonId] [int] NOT NULL,
+	CONSTRAINT [PK_Team_Members] PRIMARY KEY CLUSTERED ([id])
 );
 
 
 GO
-CREATE TABLE [People](
-[id] [int] IDENTITY(1,1) NOT NULL,
-[FirstName] [nvarchar](100) NOT NULL,
-[LastName] [nvarchar](100) NOT NULL,
-[EmailAddress] [nvarchar](100) NOT NULL,
-[CellPhoneNumber] [nvarchar](100),
-CONSTRAINT [PK_People] PRIMARY KEY CLUSTERED ([id])
+CREATE TABLE [People]
+(
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[FirstName] [nvarchar](100) NOT NULL,
+	[LastName] [nvarchar](100) NOT NULL,
+	[EmailAddress] [nvarchar](100) NOT NULL,
+	[CellPhoneNumber] [nvarchar](100),
+	CONSTRAINT [PK_People] PRIMARY KEY CLUSTERED ([id])
 );
 
 
 GO
-CREATE TABLE [Matchups](
-[id] [int] IDENTITY(1,1) NOT NULL,
-[TournamentId] [int] NOT NULL,
-[WinnerId] [int],
-[MatchupRound] [int] NOT NULL,
-CONSTRAINT [PK_Matchups] PRIMARY KEY CLUSTERED ([id])
+CREATE TABLE [Matchups]
+(
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[TournamentId] [int] NOT NULL,
+	[WinnerId] [int],
+	[MatchupRound] [int] NOT NULL,
+	CONSTRAINT [PK_Matchups] PRIMARY KEY CLUSTERED ([id])
 );
 
 
 GO
-CREATE TABLE [MatchupEntries](
-[id] [int] IDENTITY(1,1) NOT NULL,
-[MatchupId] [int] NOT NULL,
-[ParentMatchupId] [int],
-[TeamCompetingId] [int],
-[Score] [int],
-CONSTRAINT [PK_Matchup_Entries] PRIMARY KEY CLUSTERED ([id])
+CREATE TABLE [MatchupEntries]
+(
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[MatchupId] [int] NOT NULL,
+	[ParentMatchupId] [int],
+	[TeamCompetingId] [int],
+	[Score] [int],
+	CONSTRAINT [PK_Matchup_Entries] PRIMARY KEY CLUSTERED ([id])
 );
 
 
@@ -156,7 +165,7 @@ ALTER TABLE [MatchupEntries] ADD CONSTRAINT [FK_MatchupEntries_MatchupId] FOREIG
 REFERENCES [Matchups] ([id]);
 
 
-GO 
+GO
 ALTER TABLE [MatchupEntries] ADD CONSTRAINT [FK_MatchupEntries_ParentMatchupId] FOREIGN KEY ([ParentMatchupId])
 REFERENCES [Matchups] ([id]);
 
@@ -183,7 +192,7 @@ BEGIN
 
 	select me.*
 	from MatchupEntries me
-	inner join Matchups m on me.MatchupId = m.id
+		inner join Matchups m on me.MatchupId = m.id
 	where m.id = @MatchupId;
 
 END
@@ -199,8 +208,8 @@ BEGIN
 
 	SET NOCOUNT ON;
 
-	select m.* 
-	from Matchups as m 
+	select m.*
+	from Matchups as m
 	where m.TournamentId = @TournamentId
 	order by MatchupRound;
 
@@ -217,7 +226,7 @@ BEGIN
 
 	SET NOCOUNT ON;
 
-	select * 
+	select *
 	from People;
 
 END
@@ -236,7 +245,7 @@ BEGIN
 
 	select p.*
 	from Prizes p
-	inner join TournamentPrizes t on p.id = t.PrizeId
+		inner join TournamentPrizes t on p.id = t.PrizeId
 	where t.tournamentId = @TournamentId;
 
 END
@@ -253,9 +262,9 @@ BEGIN
 
 	SET NOCOUNT ON;
 
-	select t.* 
-	from Teams as t	
-	inner join TournamentEntries as e on t.id = e.TeamId
+	select t.*
+	from Teams as t
+		inner join TournamentEntries as e on t.id = e.TeamId
 	where e.TournamentId = @TournamentId;
 
 END
@@ -272,10 +281,10 @@ BEGIN
 
 	SET NOCOUNT ON;
 
-		select p.*
+	select p.*
 	from People as p
-	inner join TeamMembers as tm on p.id = tm.PersonId
-	inner join Teams as t on tm.TeamId = t.id
+		inner join TeamMembers as tm on p.id = tm.PersonId
+		inner join Teams as t on tm.TeamId = t.id
 	where t.id = @TeamId
 
 
@@ -317,8 +326,10 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-	insert into dbo.Prizes (PlaceNumber, PlaceName, PrizeAmount, PrizePercentage)
-	values (@PlaceNumber, @PlaceName, @PrizeAmount, @PrizePercentage);
+	insert into dbo.Prizes
+		(PlaceNumber, PlaceName, PrizeAmount, PrizePercentage)
+	values
+		(@PlaceNumber, @PlaceName, @PrizeAmount, @PrizePercentage);
 
 	select @id = SCOPE_IDENTITY();
 
@@ -344,7 +355,8 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-	insert into People(FirstName, LastName, EmailAddress, CellPhoneNumber)
+	insert into People
+		(FirstName, LastName, EmailAddress, CellPhoneNumber)
 	values(@FirstName, @LastName, @EmailAddress, @CellPhoneNumber);
 
 	select @id = SCOPE_IDENTITY();
@@ -367,8 +379,10 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-	insert into Teams (TeamName)
-	values (@TeamName);
+	insert into Teams
+		(TeamName)
+	values
+		(@TeamName);
 
 	select @Id = SCOPE_IDENTITY();
 END
@@ -391,8 +405,10 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-	insert into TeamMembers (TeamId,PersonId)
-	values (@TeamId,@PersonId);
+	insert into TeamMembers
+		(TeamId,PersonId)
+	values
+		(@TeamId, @PersonId);
 
 	select @id = SCOPE_IDENTITY();
 END
@@ -411,7 +427,7 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-	select * 
+	select *
 	from dbo.Teams;
 END
 
@@ -432,8 +448,10 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-	insert into Tournaments(TournamentName,EntryFee,Active)
-	values (@TournamentName,@EntryFee,1);
+	insert into Tournaments
+		(TournamentName,EntryFee,Active)
+	values
+		(@TournamentName, @EntryFee, 1);
 
 	select @id = SCOPE_IDENTITY();
 END
@@ -457,8 +475,10 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-	insert into TournamentPrizes(TournamentId,PrizeId)
-	values (@TournamentId,@PrizeId);
+	insert into TournamentPrizes
+		(TournamentId,PrizeId)
+	values
+		(@TournamentId, @PrizeId);
 
 	select @id = SCOPE_IDENTITY();
 END
@@ -482,8 +502,10 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-	insert into TournamentEntries(TournamentId,TeamId)
-	values (@TournamentId,@TeamId);
+	insert into TournamentEntries
+		(TournamentId,TeamId)
+	values
+		(@TournamentId, @TeamId);
 
 	select @id = SCOPE_IDENTITY();
 END
@@ -504,8 +526,10 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-	insert into Matchups(TournamentId,MatchupRound)
-	values (@TournamentId,@MatchupRound);
+	insert into Matchups
+		(TournamentId,MatchupRound)
+	values
+		(@TournamentId, @MatchupRound);
 
 	select @id = SCOPE_IDENTITY();
 END
@@ -528,8 +552,10 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-	insert into MatchupEntries(MatchupId,ParentMatchupId,TeamCompetingId)
-	values (@MatchupId,@ParentMatchupId,@TeamCompetingId);
+	insert into MatchupEntries
+		(MatchupId,ParentMatchupId,TeamCompetingId)
+	values
+		(@MatchupId, @ParentMatchupId, @TeamCompetingId);
 
 	select @id = SCOPE_IDENTITY();
 END
@@ -559,7 +585,6 @@ END
 
 
 
-
 GO
 -- =============================================
 -- Author:		Alejandro
@@ -576,6 +601,27 @@ BEGIN
 
 	update dbo.MatchupEntries
 	set TeamCompetingId = @TeamCompetingId, Score = @Score
+	where id = @Id;
+
+END
+
+
+
+
+GO
+-- =============================================
+-- Author:		Alejandro
+-- Create date: 8/31/2025
+-- Description: Marks a tournament as complete.
+-- =============================================
+CREATE PROCEDURE dbo.spTournaments_Complete
+	@id int
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	update dbo.Tournaments
+	set Active = 0
 	where id = @Id;
 
 END
