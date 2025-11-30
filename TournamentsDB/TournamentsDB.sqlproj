@@ -94,5 +94,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="PublishProfiles\TournamentsDBToPc.publish.xml" />
+    <None Include="PublishProfiles\TournamentsDBToLocalDB.publish.xml" />
   </ItemGroup>
 </Project>

@@ -10,7 +10,7 @@ namespace TrackerLibrary.DataAccess
     public class SqlConnector : IDataConnection
     {
         private const string db = "Tournaments";
-        //TODO - Make the CreatePrize method actually save to the database
+
         /// <summary>
         /// Gives and ID to the new prize and save it to the database.
         /// </summary>

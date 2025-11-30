@@ -27,7 +27,6 @@ namespace TrackerLibrary
             {
                 mail.Bcc.Add(email);
             }
-            // TODO: Continue here 39:42
 
             mail.From = fromMailAddress;
             mail.Subject = subject;

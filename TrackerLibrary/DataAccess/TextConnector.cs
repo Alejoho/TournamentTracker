@@ -23,9 +23,6 @@ namespace TrackerLibrary.DataAccess
             if (prizes.Count > 0)
                 currentId = prizes.OrderByDescending(x => x.Id).First().Id + 1;
 
-            //TODO - This is an alternative to the code of the line 34 through 37
-            //int currentId = prizes.OrderByDescending(x => x.ID).Select(x => x.ID).FirstOrDefault() + 1;
-
             model.Id = currentId;
 
             //Add the new record with the new ID (max + 1)
