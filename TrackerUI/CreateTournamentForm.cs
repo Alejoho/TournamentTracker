@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using TrackerLibrary;
 using TrackerLibrary.Models;
@@ -10,6 +11,7 @@ namespace TrackerUI
         List<TeamModel> availableTeams = GlobalConfig.Connection.GetTeam_All();
         List<TeamModel> selectedTeams = new List<TeamModel>();
         List<PrizeModel> selectedPrizes = new List<PrizeModel>();
+        public event EventHandler OnTournamentCreated;
 
         public CreateTournamentForm()
         {
@@ -122,7 +124,6 @@ namespace TrackerUI
             tm.Prizes = selectedPrizes;
             tm.EnteredTeams = selectedTeams;
 
-            //TODO - Wire up our matchups
             TournamentLogic.CreateRounds(tm);
 
             //Create Tournament entry
@@ -131,6 +132,8 @@ namespace TrackerUI
             GlobalConfig.Connection.CreateTournament(tm);
 
             tm.AlertUsersToNewRound();
+
+            OnTournamentCreated?.Invoke(this, EventArgs.Empty);
 
             TournamentViewerForm frm = new TournamentViewerForm(tm);
             frm.Show();

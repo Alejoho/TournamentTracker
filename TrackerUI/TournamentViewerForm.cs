@@ -29,7 +29,7 @@ namespace TrackerUI
             LoadRounds();
         }
 
-        private void Tournament_OnTournamentComplete(object sender, DateTime e)
+        private void Tournament_OnTournamentComplete(object sender, EventArgs e)
         {
             this.Close();
         }
