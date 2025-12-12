@@ -91,6 +91,7 @@
     <Build Include="dbo\Stored Procedures\spMatchupEntries_Update.sql" />
     <Build Include="dbo\Stored Procedures\spMatchupEntries_Insert.sql" />
     <Build Include="dbo\Stored Procedures\spMatchupEntries_GetByMatchup.sql" />
+    <Build Include="dbo\Stored Procedures\spTournaments_Delete.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PublishProfiles\TournamentsDBToPc.publish.xml" />
