@@ -105,6 +105,8 @@ namespace TrackerLibrary.DataAccess
 
             model.Id = currentId;
 
+            model.Active = true;
+
             model.SaveRoundsToFile();
 
             tournaments.Add(model);
@@ -119,7 +121,9 @@ namespace TrackerLibrary.DataAccess
             return GlobalConfig.TournamentFile
                 .FullFilePath()
                 .LoadFile()
-                .ConvertToTournamentModels();
+                .ConvertToTournamentModels()
+                .Where(t => t.Active)
+                .ToList();
         }
 
         public void UpdateMatchup(MatchupModel model)
@@ -135,7 +139,8 @@ namespace TrackerLibrary.DataAccess
                 LoadFile().
                 ConvertToTournamentModels();
 
-            tournaments.Remove(model);
+            var tournament = tournaments.First(t => t.Id == model.Id);
+            tournament.Active = false;
 
             tournaments.SaveToTournamentFile();
         }

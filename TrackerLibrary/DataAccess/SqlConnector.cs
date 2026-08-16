@@ -258,6 +258,7 @@ namespace TrackerLibrary.DataAccess
                     team.TeamMembers = connection.Query<PersonModel>("dbo.spTeamMembers_GetByTeam", p, commandType: CommandType.StoredProcedure).ToList();
                 }
             }
+
             return output;
         }
 

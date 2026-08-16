@@ -33,6 +33,10 @@ namespace TrackerLibrary.Models
         /// The matchups that the differents teams have to play
         /// </summary>
         public List<List<MatchupModel>> Rounds { get; set; } = new List<List<MatchupModel>>();
+        /// <summary>
+        /// A flag to tell if the tournament is active
+        /// </summary>
+        public bool Active { get; set; }
 
         public void CompleteTournament()
         {

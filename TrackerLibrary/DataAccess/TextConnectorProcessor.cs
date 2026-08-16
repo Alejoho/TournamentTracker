@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.IO;
@@ -122,7 +123,8 @@ namespace TrackerLibrary.DataAccess.TextHelpers
             //EnteredTeams = 3
             //Prizes = 4
             //Rounds = 5
-            //id,TournamentName,EntryFeee,(id|id|id - Entered Teams), (id|id|id - Prizes), (Rounds - id^id^id|id^id^id|id^id^id)
+            //Active = 6
+            //id,TournamentName,EntryFeee,(id|id|id - Entered Teams),(id|id|id - Prizes),(id^id^id|id^id^id|id^id^id - Rounds),Active
             List<TournamentModel> output = new List<TournamentModel>();
             List<TeamModel> teams = GlobalConfig.TeamFile.FullFilePath().LoadFile().ConvertToTeamModels();
             List<PrizeModel> prizes = GlobalConfig.PrizesFile.FullFilePath().LoadFile().ConvertToPrizeModels();
@@ -169,6 +171,17 @@ namespace TrackerLibrary.DataAccess.TextHelpers
                     }
 
                     tm.Rounds.Add(ms);
+                }
+
+                // Backward compatibility. For tournaments without Active column.
+                // We assume that the completed ones were deleted.
+                try
+                {
+                    tm.Active = int.Parse(cols[6]) == 1;
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    tm.Active = true;
                 }
 
                 output.Add(tm);
@@ -543,7 +556,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers
 
             foreach (TournamentModel tm in models)
             {
-                lines.Add($"{tm.Id},{tm.TournamentName},{tm.EntryFee},{ConvertTeamListToString(tm.EnteredTeams)},{ConvertPrizeListToString(tm.Prizes)},{ConvertRoundListToString(tm.Rounds)}");
+                lines.Add($"{tm.Id},{tm.TournamentName},{tm.EntryFee},{ConvertTeamListToString(tm.EnteredTeams)},{ConvertPrizeListToString(tm.Prizes)},{ConvertRoundListToString(tm.Rounds)},{(tm.Active ? "1" : "0")}");
             }
 
             File.WriteAllLines(GlobalConfig.TournamentFile.FullFilePath(), lines);
