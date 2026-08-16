@@ -195,6 +195,20 @@ namespace TrackerUI
 
         private void scoreButton_Click(object sender, EventArgs e)
         {
+            MatchupModel m = (MatchupModel)matchupListBox.SelectedItem;
+
+            if (m.Entries.Count == 1)
+            {
+                MessageBox.Show($"Bye Week Matchup");
+                return;
+            }
+
+            if (m.Entries.Any(entry => entry.Score > 0))
+            {
+                MessageBox.Show($"Matchup already played.");
+                return;
+            }
+
             string errorMessage = ValidateData();
 
             if (errorMessage.Length > 0)
@@ -203,7 +217,6 @@ namespace TrackerUI
                 return;
             }
 
-            MatchupModel m = (MatchupModel)matchupListBox.SelectedItem;
             double teamOneScore = 0;
             double teamTwoScore = 0;
 
@@ -253,7 +266,6 @@ namespace TrackerUI
             catch (Exception ex)
             {
                 MessageBox.Show($"The aplication had the following error: {ex.Message}");
-
             }
 
             LoadMatchups((int)roundDropDown.SelectedItem);

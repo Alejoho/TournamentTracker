@@ -41,6 +41,12 @@ namespace TrackerUI
         private void loadTournamentButton_Click(object sender, EventArgs e)
         {
             TournamentModel tm = (TournamentModel)loadExistingTournamentDropDown.SelectedItem;
+
+            if (tm is null)
+            {
+                return;
+            }
+
             tm.OnTournamentComplete += RefreshLists;
             TournamentViewerForm frm = new TournamentViewerForm(tm);
             // create a subcriber method for the event im going to create in tournamentviewerform
