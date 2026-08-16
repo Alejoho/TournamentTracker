@@ -138,8 +138,6 @@ namespace TrackerLibrary.DataAccess
             tournaments.Remove(model);
 
             tournaments.SaveToTournamentFile();
-
-            TournamentLogic.UpdateTournamentResults(model);
         }
     }
 }
